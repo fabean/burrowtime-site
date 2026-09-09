@@ -25,7 +25,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@openai/sites-vite-plugin": "^0.2.0",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "overrides": {
     "rolldown": "1.2.7"
