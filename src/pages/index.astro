@@ -1,0 +1,234 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Terminal from '../components/Terminal.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="BurrowTime"
+  description="Open-source, local-first time tracking for developers and coding agents. Track Codex, Claude Code, Cursor, Gemini CLI, OpenCode, or any MCP client without giving up your data."
+>
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Local-first agent time tracking</p>
+        <h1>Know where your agent's <span>time went.</span></h1>
+        <p>
+          BurrowTime is an open-source CLI and terminal UI for your own work and
+          the coding agents you ask to help. Every timer stays in local files.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href={`${base}docs/agent-time-tracking/`}>Track an agent</a>
+          <a class="button secondary" href={`${base}docs/`}>Read the docs</a>
+        </div>
+        <div class="install-line"><span>$</span> go install github.com/fabean/BurrowTime/cmd/burrowtime@latest</div>
+      </div>
+
+      <div class="hero-visual" aria-label="BurrowTime agent session example">
+        <div class="mascot-wrap">
+          <img
+            src={`${base}burrowtime-mascot.png`}
+            alt="BurrowTime gopher holding a pocket watch beside a terminal in its burrow"
+            width="1254"
+            height="1254"
+          />
+        </div>
+        <div class="hero-terminal">
+          <Terminal title="burrowtime · agent session">
+            <p><span class="prompt">$</span> burrowtime agent status --active</p>
+            <p><span class="accent">82fd91a</span>&nbsp; active&nbsp;&nbsp; codex&nbsp;&nbsp; client portal +PORTAL-42</p>
+            <p class="muted">lease renewed · local files only</p>
+            <p><span class="prompt">$</span> burrowtime agent report --project "client portal"</p>
+            <p>client portal&nbsp;&nbsp; <span class="accent">2h 14m 08s</span></p>
+          </Terminal>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="integration-strip" aria-label="Supported coding agents">
+    <div class="shell integration-inner">
+      <span>Works with</span>
+      <span class="integration-name">Codex</span>
+      <span class="integration-name">Claude Code</span>
+      <span class="integration-name">Cursor</span>
+      <span class="integration-name">Gemini CLI</span>
+      <span class="integration-name">OpenCode</span>
+      <span class="integration-name">MCP</span>
+    </div>
+  </div>
+
+  <section class="demo-section">
+    <div class="shell">
+      <div class="section-heading centered">
+        <p class="eyebrow">The real interface</p>
+        <h2>Reports that belong in a terminal.</h2>
+        <p>Browse ranges, switch between logs and reports, and filter without leaving the keyboard.</p>
+      </div>
+      <figure class="demo-frame">
+        <img
+          src={`${base}burrowtime-tui.gif`}
+          alt="BurrowTime terminal UI showing a weekly report, changing its range, and filtering for a client project"
+          width="1200"
+          height="760"
+          loading="lazy"
+        />
+        <figcaption>Recorded with VHS. <a href={`${base}burrowtime-tui.gif`}>Open the full-size demo</a>.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="section-heading centered">
+        <p class="eyebrow">The useful kind of oversight</p>
+        <h2>A timer your agent cannot quietly take over.</h2>
+        <p>
+          Agent sessions wrap ordinary BurrowTime timers with ownership and an
+          expiry. You get a trustworthy record without turning your laptop into
+          another SaaS dashboard.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span class="number">01</span>
+          <h3>Explicit by design</h3>
+          <p>Tracking starts only when you ask for it and provide a project plus a task or ticket.</p>
+        </article>
+        <article class="feature-card">
+          <span class="number">02</span>
+          <h3>One session, one owner</h3>
+          <p>Your agent keeps the exact session ID, so it never stops a timer that belongs to you or another agent.</p>
+        </article>
+        <article class="feature-card">
+          <span class="number">03</span>
+          <h3>Leases close loose ends</h3>
+          <p>If an agent disappears, its lease expires and BurrowTime can close the timer at the last safe deadline.</p>
+        </article>
+        <article class="feature-card">
+          <span class="number">04</span>
+          <h3>Safe retries</h3>
+          <p>Idempotency keys let clients retry without opening duplicate sessions and inflating a report.</p>
+        </article>
+        <article class="feature-card">
+          <span class="number">05</span>
+          <h3>Waiting does not count</h3>
+          <p>Agents can pause while they need your answer, then resume the same owned session when work continues.</p>
+        </article>
+        <article class="feature-card">
+          <span class="number">06</span>
+          <h3>Plain local data</h3>
+          <p>Completed agent sessions become standard Watson-compatible frames that appear in normal logs and reports.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark">
+    <div class="shell workflow-grid">
+      <div>
+        <div class="section-heading">
+          <p class="eyebrow">Three commands, one prompt</p>
+          <h2>Setup takes about a minute.</h2>
+          <p>Install BurrowTime, place its bundled skill where your agent can find it, and ask for a tracked task.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <span class="step-number">1</span>
+            <div>
+              <h3>Install the binary</h3>
+              <p>Use Go or download a checksummed release for Linux, macOS, or Windows.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-number">2</span>
+            <div>
+              <h3>Install the agent skill</h3>
+              <p>Pick one supported client, or install the portable and Claude Code copies together.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-number">3</span>
+            <div>
+              <h3>Ask in plain English</h3>
+              <p>Name the BurrowTime project and task. The skill handles the session lifecycle.</p>
+            </div>
+          </div>
+        </div>
+        <div class="section-actions">
+          <a class="button" href={`${base}docs/agent-time-tracking/`}>Open the setup guide</a>
+        </div>
+      </div>
+
+      <div class="workflow-code">
+        <Terminal title="setup">
+          <p><span class="prompt">$</span> go install github.com/fabean/BurrowTime/cmd/burrowtime@latest</p>
+          <p><span class="prompt">$</span> burrowtime skill install codex</p>
+          <p>Installed track-time-with-burrowtime for codex</p>
+          <p><span class="prompt">$</span> burrowtime skill doctor codex</p>
+          <p>OK skill for codex</p>
+          <p>OK burrowtime v0.1.2 supports agent protocol 1</p>
+          <p>&nbsp;</p>
+          <p class="muted">Prompt your agent:</p>
+          <p>"Track this work in BurrowTime under</p>
+          <p>&nbsp;client portal +PORTAL-42."</p>
+        </Terminal>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell plain-grid">
+      <div class="report-card" aria-label="Example weekly agent time report">
+        <div class="report-top">
+          <strong>Agent time · this week</strong>
+          <span>6h 02m</span>
+        </div>
+        <div class="report-row">
+          <strong>client portal</strong><span>3h 41m</span>
+          <div class="report-bar"><span style="width: 78%"></span></div>
+          <small>codex · PORTAL-42</small>
+        </div>
+        <div class="report-row">
+          <strong>release prep</strong><span>1h 29m</span>
+          <div class="report-bar"><span style="width: 45%"></span></div>
+          <small>claude · REL-18</small>
+        </div>
+        <div class="report-row">
+          <strong>docs</strong><span>52m</span>
+          <div class="report-bar"><span style="width: 27%"></span></div>
+          <small>cursor · DOCS-7</small>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-heading">
+          <p class="eyebrow">Still a great human timer</p>
+          <h2>Your work and agent work share one honest report.</h2>
+          <p>
+            Open the Bubble Tea dashboard for an interactive view, or use JSON
+            and CSV when a script needs the data. Concurrent timers remain
+            deliberate, visible, and independently stoppable.
+          </p>
+        </div>
+        <div class="section-actions">
+          <a class="button" href={`${base}docs/cli/`}>Browse CLI commands</a>
+          <a class="button secondary" href={`${base}docs/watson/`}>Coming from Watson?</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="shell cta-panel">
+      <div>
+        <p class="eyebrow">Open source and local</p>
+        <h2>Give your agent a clock. Keep the keys.</h2>
+        <p>BurrowTime stores ordinary files on your machine. No account, hosted database, or background tracking service is required.</p>
+      </div>
+      <a class="button" href="https://github.com/fabean/BurrowTime/releases/latest">Download BurrowTime</a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,51 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout
+  title="Watson migration"
+  description="Move time data between Watson and BurrowTime with explicit snapshot copies, backups, and compatible core files."
+>
+  <h2>What stays compatible</h2>
+  <p>
+    BurrowTime targets Watson 2.1.0 command behavior and preserves the
+    <code>config</code>, <code>frames</code>, <code>state</code>, and
+    <code>last_sync</code> formats. Its agent and concurrent-timer metadata lives
+    in separate companion files.
+  </p>
+
+  <h2>Move from Watson</h2>
+  <p>
+    On first interactive use, BurrowTime offers to copy a detected Watson
+    installation. Watson's files are not moved or edited. You can run the same
+    migration later:
+  </p>
+  <pre><code>burrowtime migrate from-watson</code></pre>
+  <p>If BurrowTime already has data, it confirms replacement and creates a timestamped backup.</p>
+
+  <h2>Move back to Watson</h2>
+  <pre><code>burrowtime migrate to-watson</code></pre>
+  <p>
+    Watson can represent one active timer. BurrowTime refuses the export while
+    extra concurrent timers are running, and it does not copy the companion
+    agent or concurrency files.
+  </p>
+
+  <div class="callout">
+    <p><strong>Migration is a snapshot, not a sync.</strong> Activity recorded after a copy does not automatically appear in the other program.</p>
+  </div>
+
+  <h2>Use custom directories</h2>
+  <pre><code>burrowtime --data-dir /path/to/burrowtime \
+  migrate from-watson --watson-data-dir /path/to/watson
+
+burrowtime --data-dir /path/to/burrowtime \
+  migrate to-watson --watson-data-dir /path/to/watson --force</code></pre>
+
+  <h2>The compatibility executable</h2>
+  <p>
+    Release archives also contain <code>watson</code>. It keeps Watson's original
+    data-directory behavior and non-interactive bare command for users who want
+    a direct Go-based replacement.
+  </p>
+</DocsLayout>

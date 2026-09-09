@@ -1,0 +1,79 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const zshCompletion = 'burrowtime completion zsh > "${fpath[1]}/_burrowtime"';
+---
+
+<DocsLayout
+  title="CLI reference"
+  description="A practical map of BurrowTime commands for timers, reports, coding-agent sessions, migration, and automation."
+>
+  <h2>Everyday tracking</h2>
+  <pre><code>burrowtime start "deep work" +planning
+burrowtime status
+burrowtime stop
+burrowtime report --week</code></pre>
+  <figure class="demo-frame">
+    <img
+      src={`${import.meta.env.BASE_URL}burrowtime-cli.gif`}
+      alt="BurrowTime starting a project timer, showing its status, stopping it, and printing a daily report"
+      width="1100"
+      height="620"
+      loading="lazy"
+    />
+    <figcaption>The standard timer lifecycle. <a href={`${import.meta.env.BASE_URL}burrowtime-cli.gif`}>Open the full-size demo</a>.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>burrowtime</code></td><td>Open the interactive terminal dashboard.</td></tr>
+      <tr><td><code>start</code>, <code>stop</code>, <code>status</code></td><td>Control and inspect live timers.</td></tr>
+      <tr><td><code>restart</code>, <code>cancel</code></td><td>Resume a frame or discard a running timer.</td></tr>
+      <tr><td><code>add</code>, <code>edit</code>, <code>remove</code></td><td>Maintain historical frames.</td></tr>
+      <tr><td><code>log</code>, <code>report</code>, <code>aggregate</code></td><td>Inspect and summarize recorded time.</td></tr>
+      <tr><td><code>projects</code>, <code>tags</code>, <code>frames</code></td><td>List values for scripts and completion.</td></tr>
+      <tr><td><code>rename</code>, <code>merge</code></td><td>Rewrite names or resolve a frames-file merge.</td></tr>
+      <tr><td><code>agent</code></td><td>Control and report owned coding-agent sessions.</td></tr>
+      <tr><td><code>mcp</code></td><td>Run the local MCP server over stdio.</td></tr>
+      <tr><td><code>skill</code></td><td>Install or diagnose bundled agent skills.</td></tr>
+      <tr><td><code>migrate</code></td><td>Copy compatible data between BurrowTime and Watson.</td></tr>
+      <tr><td><code>completion</code></td><td>Generate shell completion scripts.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Concurrent timers</h2>
+  <p>Scripts must choose replacement or concurrency explicitly:</p>
+  <pre><code># Stop active timers, then start this one
+burrowtime start --stop "client call" +meeting
+
+# Keep active timers and add another
+burrowtime start --concurrent "background export" +ops
+
+# Stop one known timer or every active timer
+burrowtime stop --timer 4e169a2
+burrowtime stop --all</code></pre>
+
+  <h2>Machine-readable output</h2>
+  <pre><code>burrowtime log --all --json | jq '.[0]'
+burrowtime report --month --csv > august.csv
+burrowtime capabilities --json</code></pre>
+
+  <h2>Reports and filters</h2>
+  <pre><code>burrowtime log --day
+burrowtime log --month --project "client portal"
+burrowtime report --week --tag billable
+burrowtime report --from 2026-08-01 --to 2026-08-15
+burrowtime aggregate --year</code></pre>
+
+  <h2>Shell completion</h2>
+  <pre><code># Bash
+source &lt;(burrowtime completion bash)
+
+# Zsh
+{zshCompletion}
+
+# Fish
+burrowtime completion fish &gt; ~/.config/fish/completions/burrowtime.fish</code></pre>
+  <p>Run <code>burrowtime &lt;command&gt; --help</code> for every flag and example.</p>
+</DocsLayout>

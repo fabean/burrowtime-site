@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Page not found" description="This BurrowTime page could not be found." noindex={true}>
+  <section class="not-found">
+    <div>
+      <p class="eyebrow">Timer stopped</p>
+      <h1>404</h1>
+      <p>This page burrowed somewhere else.</p>
+      <a class="button" href={base}>Back to BurrowTime</a>
+    </div>
+  </section>
+</BaseLayout>

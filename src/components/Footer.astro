@@ -1,0 +1,28 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <a class="brand footer-brand" href={base}>BurrowTime</a>
+      <p>Local time tracking for people and the agents they ask to help.</p>
+    </div>
+    <div>
+      <p class="footer-label">Learn</p>
+      <a href={`${base}docs/`}>Documentation</a>
+      <a href={`${base}docs/agent-time-tracking/`}>Agent setup</a>
+      <a href={`${base}docs/mcp/`}>MCP server</a>
+    </div>
+    <div>
+      <p class="footer-label">Project</p>
+      <a href="https://github.com/fabean/BurrowTime">Source</a>
+      <a href="https://github.com/fabean/BurrowTime/releases">Releases</a>
+      <a href="https://github.com/fabean/BurrowTime/issues">Issues</a>
+    </div>
+  </div>
+  <div class="shell footer-bottom">
+    <span>MIT licensed.</span>
+    <span>No account. No telemetry. Your files stay yours.</span>
+  </div>
+</footer>

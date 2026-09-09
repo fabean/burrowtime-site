@@ -1,0 +1,62 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const mcpConfig = `{
+  "mcpServers": {
+    "burrowtime": {
+      "command": "burrowtime",
+      "args": ["mcp"]
+    }
+  }
+}`;
+---
+
+<DocsLayout
+  title="MCP server"
+  description="Connect BurrowTime to an MCP client for owned agent timers, lease renewal, pause and resume, recovery, and reporting."
+>
+  <h2>Configure the server</h2>
+  <p>
+    BurrowTime includes a local Model Context Protocol server over standard
+    input and output. Configure your MCP client to launch the installed command:
+  </p>
+  <pre><code>{mcpConfig}</code></pre>
+  <p>No port, API key, account, or remote service is involved.</p>
+
+  <h2>Available tools</h2>
+  <table>
+    <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>start_time</code></td><td>Start an explicitly requested owned session and return its exact ID.</td></tr>
+      <tr><td><code>heartbeat_time</code></td><td>Renew the lease before it expires.</td></tr>
+      <tr><td><code>pause_time</code></td><td>Pause while the agent is waiting and close the current timer segment.</td></tr>
+      <tr><td><code>resume_time</code></td><td>Resume the same session with a new standard timer.</td></tr>
+      <tr><td><code>stop_time</code></td><td>Stop one owned session without affecting other timers.</td></tr>
+      <tr><td><code>list_time_sessions</code></td><td>List sessions and reconcile expired leases.</td></tr>
+      <tr><td><code>report_agent_time</code></td><td>Report durations by client, project, or session status.</td></tr>
+      <tr><td><code>recover_time_sessions</code></td><td>Close timers whose agent lease expired.</td></tr>
+      <tr><td><code>burrowtime_capabilities</code></td><td>Read the supported protocol and feature flags.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Expected client behavior</h2>
+  <ol>
+    <li>Call <code>burrowtime_capabilities</code> and require agent protocol 1.</li>
+    <li>Start only after the user explicitly asks and provides a project plus task.</li>
+    <li>Retain the returned session ID and use it for every later write.</li>
+    <li>Renew the lease during long work and pause before waiting for required input.</li>
+    <li>Stop the exact session before returning the final answer.</li>
+  </ol>
+
+  <div class="callout">
+    <p><strong>Do not fall back to a bare stop.</strong> An integration must never run <code>burrowtime stop</code> or <code>burrowtime stop --all</code> on an agent's behalf. Those commands can affect timers the integration does not own.</p>
+  </div>
+
+  <h2>Capability check</h2>
+  <pre><code>burrowtime capabilities --json</code></pre>
+  <p>
+    The result reports the agent protocol, MCP protocol, installed feature flags,
+    supported skill targets, and session states. This lets a client fail clearly
+    when the binary is older than its integration.
+  </p>
+</DocsLayout>

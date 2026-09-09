@@ -1,0 +1,60 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<DocsLayout
+  title="Documentation"
+  description="Install BurrowTime, connect a coding agent, use the MCP server, and keep your Watson-compatible time data under your control."
+>
+  <h2>Pick a path</h2>
+  <p>
+    BurrowTime works as a human-operated timer and as a safe clock for coding
+    agents. If you are here because you want an AI agent to track its work,
+    start with the agent guide. The normal CLI needs no agent setup.
+  </p>
+
+  <div class="docs-card-grid">
+    <a class="docs-card" href={`${base}docs/installation/`}>
+      <h2>Install BurrowTime</h2>
+      <p>Get the standalone command for Linux, macOS, or Windows.</p>
+      <span>Installation →</span>
+    </a>
+    <a class="docs-card" href={`${base}docs/agent-time-tracking/`}>
+      <h2>Track coding agents</h2>
+      <p>Set up Codex, Claude Code, Cursor, Gemini CLI, or OpenCode.</p>
+      <span>Agent guide →</span>
+    </a>
+    <a class="docs-card" href={`${base}docs/mcp/`}>
+      <h2>Connect over MCP</h2>
+      <p>Use BurrowTime with any client that can launch a local MCP server.</p>
+      <span>MCP setup →</span>
+    </a>
+    <a class="docs-card" href={`${base}docs/watson/`}>
+      <h2>Move from Watson</h2>
+      <p>Copy your history safely and preserve Watson's file format.</p>
+      <span>Migration guide →</span>
+    </a>
+  </div>
+
+  <h2>The short version</h2>
+  <pre><code>go install github.com/fabean/BurrowTime/cmd/burrowtime@latest
+
+burrowtime start "client portal" +review
+burrowtime status
+burrowtime stop
+burrowtime report --week</code></pre>
+
+  <div class="callout">
+    <p><strong>Local means local.</strong> BurrowTime does not require an account, cloud database, or tracking service. It writes ordinary files in its data directory.</p>
+  </div>
+
+  <h2>How the pieces fit</h2>
+  <p>
+    The interactive dashboard and direct CLI use the same storage and reporting
+    code. Agent sessions add ownership, leases, safe retries, and pause or resume
+    behavior around standard timers. When a session ends, its work is still a
+    normal Watson-compatible frame.
+  </p>
+</DocsLayout>

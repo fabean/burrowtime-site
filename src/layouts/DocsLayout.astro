@@ -1,0 +1,51 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow?: string;
+}
+
+const { title, description, eyebrow = 'BurrowTime docs' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const currentPath = Astro.url.pathname;
+const items = [
+  { href: `${base}docs/`, label: 'Start here' },
+  { href: `${base}docs/installation/`, label: 'Installation' },
+  { href: `${base}docs/agent-time-tracking/`, label: 'Agent time tracking' },
+  { href: `${base}docs/mcp/`, label: 'MCP server' },
+  { href: `${base}docs/cli/`, label: 'CLI reference' },
+  { href: `${base}docs/watson/`, label: 'Watson migration' },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="docs-hero">
+    <div class="shell">
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+      <p>{description}</p>
+    </div>
+  </header>
+
+  <div class="shell docs-shell">
+    <aside class="docs-sidebar">
+      <p>Documentation</p>
+      <nav aria-label="Documentation">
+        {items.map((item) => (
+          <a
+            class:list={[{ active: currentPath === item.href }]}
+            href={item.href}
+            aria-current={currentPath === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </aside>
+    <article class="docs-content">
+      <slot />
+    </article>
+  </div>
+</BaseLayout>

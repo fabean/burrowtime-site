@@ -1,0 +1,48 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout
+  title="Installation"
+  description="Install the BurrowTime CLI and terminal UI from a release archive or with Go."
+>
+  <h2>Install with Go</h2>
+  <p>BurrowTime requires Go 1.24 or newer when you install from source.</p>
+  <pre><code>go install github.com/fabean/BurrowTime/cmd/burrowtime@latest</code></pre>
+  <p>Make sure the Go binary directory is on your <code>PATH</code>, then check the installation:</p>
+  <pre><code>burrowtime --version
+burrowtime capabilities --json</code></pre>
+
+  <h2>Download a release</h2>
+  <p>
+    Each tagged release has checksummed archives for Linux, macOS, and Windows.
+    The archive contains <code>burrowtime</code> and the optional
+    <code>watson</code> compatibility executable.
+  </p>
+  <p><a href="https://github.com/fabean/BurrowTime/releases/latest">Open the latest GitHub release</a>.</p>
+
+  <h2>Build from source</h2>
+  <pre><code>git clone https://github.com/fabean/BurrowTime.git
+cd BurrowTime
+make build
+./bin/burrowtime</code></pre>
+
+  <h2>Choose where data lives</h2>
+  <p>
+    Set <code>BURROWTIME_DIR</code> to choose a permanent data directory, or pass
+    <code>--data-dir</code> for one command. Without either, BurrowTime follows
+    the platform configuration directory.
+  </p>
+  <pre><code>BURROWTIME_DIR="$HOME/.local/share/burrowtime" burrowtime status
+
+burrowtime --data-dir /path/to/test-data report --week</code></pre>
+  <div class="callout">
+    <p><strong>Watson stays separate.</strong> The primary command does not write into Watson's directory. Use the migration command when you want a deliberate copy.</p>
+  </div>
+
+  <h2>Next step</h2>
+  <p>
+    Run <code>burrowtime</code> to open the terminal UI. If you want a coding
+    agent to track its own task, continue to the <a href="../agent-time-tracking/">agent time tracking guide</a>.
+  </p>
+</DocsLayout>

@@ -1,0 +1,94 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout
+  title="Agent time tracking"
+  eyebrow="Guide"
+  description="Track work done by Codex, Claude Code, Cursor, Gemini CLI, and OpenCode with owned local timers that start only when you ask."
+>
+  <h2>Install the skill</h2>
+  <p>
+    The BurrowTime binary includes a small agent skill. Installing the binary
+    does not activate tracking, and installing the skill does not start a timer.
+    Choose the client you use:
+  </p>
+  <pre><code>burrowtime skill install codex
+burrowtime skill install claude
+burrowtime skill install cursor
+burrowtime skill install gemini
+burrowtime skill install opencode</code></pre>
+  <p>To install the portable skill plus Claude Code's separate copy in one pass:</p>
+  <pre><code>burrowtime skill install all</code></pre>
+
+  <h2>Check the setup</h2>
+  <pre><code>burrowtime skill doctor codex
+# or check every installed target
+burrowtime skill doctor all</code></pre>
+  <p>
+    The doctor checks the installed files, looks for an old duplicate Codex
+    skill, and confirms that the <code>burrowtime</code> on your
+    <code>PATH</code> supports agent protocol 1.
+  </p>
+
+  <h2>Ask the agent to track</h2>
+  <p>Include a BurrowTime project and a task or ticket in the request:</p>
+  <pre><code>Track this work in BurrowTime under "client portal" +PORTAL-42.</code></pre>
+  <figure class="demo-frame">
+    <img
+      src={`${import.meta.env.BASE_URL}burrowtime-agent.gif`}
+      alt="BurrowTime creating, pausing, resuming, stopping, and reporting an owned Codex session"
+      width="1100"
+      height="700"
+      loading="lazy"
+    />
+    <figcaption>An owned agent session. <a href={`${import.meta.env.BASE_URL}burrowtime-agent.gif`}>Open the full-size demo</a>.</figcaption>
+  </figure>
+  <p>
+    The agent checks capabilities, opens one owned session, renews its lease
+    during long work, pauses if it must wait for required input, and stops that
+    exact session when the task ends.
+  </p>
+  <div class="callout">
+    <p><strong>No silent tracking.</strong> The bundled skill tells agents to track only after an explicit request. A normal chat or coding task does not start a timer.</p>
+  </div>
+
+  <h2>What ownership protects</h2>
+  <table>
+    <thead><tr><th>Mechanism</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>Session ID</td><td>Every later action targets the exact timer the agent started.</td></tr>
+      <tr><td>Idempotency key</td><td>A safe retry reuses the session instead of starting another.</td></tr>
+      <tr><td>Lease</td><td>An interrupted agent cannot leave an unbounded timer behind.</td></tr>
+      <tr><td>Pause and resume</td><td>Time spent waiting for a required answer can stay out of the total.</td></tr>
+      <tr><td>Manual reconciliation</td><td>You can stop the timer yourself without breaking the agent's later cleanup.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Set repository defaults</h2>
+  <p>Place a <code>.burrowtime.toml</code> near the repository root for direct agent commands:</p>
+  <pre><code>[agent]
+project = "client portal"
+task = "PORTAL-42"
+repository = "portal-app"
+lease = "30m"
+task_from_branch = false</code></pre>
+  <p>
+    Set <code>task_from_branch = true</code> to infer ticket-shaped branch names
+    such as <code>PORTAL-42</code> when no task is configured. These defaults do
+    not turn tracking on. The user still has to ask.
+  </p>
+
+  <h2>Inspect agent time</h2>
+  <pre><code>burrowtime agent status --active
+burrowtime agent report --project "client portal"
+burrowtime agent report --client codex --json
+burrowtime agent recover</code></pre>
+
+  <h2>Use the protocol directly</h2>
+  <p>
+    Integrations can call the agent commands with JSON and retain the returned
+    <code>session.id</code>. Clients with MCP support can use the bundled
+    <a href="../mcp/">MCP server</a> instead.
+  </p>
+</DocsLayout>

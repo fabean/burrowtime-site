@@ -1,0 +1,22 @@
+---
+const base = import.meta.env.BASE_URL;
+const currentPath = Astro.url.pathname;
+const docsActive = currentPath.includes('/docs');
+---
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href={base} aria-label="BurrowTime home">
+      <img src={`${base}burrowtime-mascot.png`} alt="" width="44" height="44" />
+      <span>BurrowTime</span>
+    </a>
+
+    <nav aria-label="Main navigation">
+      <a class:list={[{ active: docsActive }]} href={`${base}docs/`}>Docs</a>
+      <a href="https://github.com/fabean/BurrowTime">GitHub</a>
+      <a class="header-download" href="https://github.com/fabean/BurrowTime/releases/latest">
+        Download
+      </a>
+    </nav>
+  </div>
+</header>
