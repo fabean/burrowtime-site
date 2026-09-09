@@ -1,0 +1,82 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Export to Clockify" description="An optional plugin for uploading completed local entries, with client-aware project mapping, per-entry rounding, and an editable review.">
+  <h2>Install the optional plugin</h2>
+  <p>BurrowTime works without Clockify. Install the separate connector only if you
+    need it. Nothing syncs in the background, and your local records stay unchanged.</p>
+  <div class="callout"><p>Clockify support is currently on <code>main</code>, not in
+    the latest tagged release. Update both executables:</p></div>
+  <pre><code>go install github.com/fabean/BurrowTime/cmd/burrowtime@main
+go install github.com/fabean/BurrowTime/cmd/burrowtime-clockify@main</code></pre>
+  <p>Keep both executables on your <code>PATH</code>.</p>
+
+  <h2>Configure and preview</h2>
+  <p>Provide <code>CLOCKIFY_API_KEY</code>, <code>CLOCKIFY_WORKSPACE_ID</code>, and
+    <code>CLOCKIFY_USER_ID</code> through your shell environment or secret manager.
+    The user must own the API key. BurrowTime stores the environment variable name,
+    never the key, in its configuration.</p>
+  <pre><code>burrowtime clockify configure --rounding up --increment 15m
+burrowtime clockify sync --today --dry-run
+burrowtime clockify sync --today</code></pre>
+  <p>Dry-run opens the same mapping and review screens, but does not upload entries
+    or save mappings or receipts. Only completed entries are eligible.</p>
+
+  <h2>Choose projects with their clients visible</h2>
+  <p>When a local project has no mapping, sync opens a project picker. Similar names
+    appear first as suggestions. Every option includes its Clockify client so you
+    can tell two projects named "Development - US" apart.</p>
+  <ul>
+    <li>Move with arrow keys or <code>j</code>/<code>k</code>, then Enter to select.</li>
+    <li>Press <code>/</code> to search project names, clients, or IDs.</li>
+    <li>Use Page Up and Page Down for longer lists.</li>
+    <li>Press <code>s</code> to skip a project or <code>q</code> to cancel.</li>
+  </ul>
+  <p>Mappings save when you confirm a nonempty upload batch. Named connections
+    support different Clockify workspaces. Jira and Tempo are not supported yet.</p>
+
+  <h2>Review before uploading</h2>
+  <p>The review shows destinations, descriptions, timestamps, recorded and exported
+    durations, billable settings, and totals. Select an entry and press Enter or
+    <code>e</code> to edit it. In the editor, <code>p</code> changes the project,
+    <code>d</code> the description, <code>t</code> the duration, and <code>b</code>
+    toggles billable. Edits apply only to that export.</p>
+  <p>From the review, press <code>s</code> to skip an entry or <code>p</code> to open
+    upload confirmation, then <code>y</code> to approve. Cancel with <code>q</code>.
+    Dry-run finishes the preview without offering an upload.</p>
+
+  <h2>Only the tag goes in the description</h2>
+  <pre><code>burrowtime start sema +SEMA-123
+# Work on the ticket, then stop the timer.
+burrowtime stop</code></pre>
+  <p>The Clockify description is <code>SEMA-123</code>. It contains no local project
+    name, leading plus sign, or BurrowTime tracking ID. Multiple tags are sorted
+    and joined with spaces. No tags means an empty description unless you edit it.</p>
+  <p>These are descriptions, not native Clockify tags or task assignments. Previously
+    uploaded descriptions are not rewritten automatically.</p>
+
+  <h2>Round each completed entry</h2>
+  <p>Rounding is off by default. Choose <code>up</code> to round up or
+    <code>nearest</code> for the closest increment. With <code>up</code> and
+    <code>15m</code>, a 16-minute entry exports as 30 minutes. Three separate
+    2-minute entries export as 45 minutes total.</p>
+  <p>Rounding adjusts the exported end time and can create overlaps or cross
+    midnight. Your local timestamps stay exact. An edited duration overrides
+    rounding for that upload.</p>
+
+  <h2>Rerun without uploading the same entry twice</h2>
+  <p>BurrowTime keeps configuration in <code>integrations.json</code> and upload
+    receipts in <code>integration-sync.json</code> in its data directory. A successful
+    upload is recorded before moving to the next entry. Later runs skip it.</p>
+  <p>If a request may have reached Clockify but no response arrived, that entry
+    stays pending. Sync will not blindly retry it. Check Clockify, then use
+    <code>resolve</code> with the remote entry ID or <code>retry --confirmed-not-created</code>
+    only after confirming no entry was created. Keep the ledger when moving or
+    backing up your data; duplicate protection depends on it.</p>
+  <pre><code>burrowtime clockify status</code></pre>
+  <p>Changed local entries are flagged, not automatically updated or deleted in
+    Clockify. For explicit date ranges, named connections, unattended
+    <code>--yes</code> uploads, and recovery commands, read the
+    <a href="https://github.com/fabean/BurrowTime/blob/main/docs/CLOCKIFY.md">full connector reference</a>.</p>
+</DocsLayout>

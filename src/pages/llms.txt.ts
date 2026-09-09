@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = ({ site }) => {
-  const root = site ?? new URL('https://fabean.github.io/BurrowTime/');
+  const root = site ?? new URL('https://fabean.github.io/burrowtime-site/');
   const link = (path: string) => new URL(path, root).toString();
   const body = `# BurrowTime
 
@@ -13,6 +13,7 @@ export const GET: APIRoute = ({ site }) => {
 - [Installation](${link('docs/installation/')})
 - [Agent time tracking](${link('docs/agent-time-tracking/')})
 - [MCP server](${link('docs/mcp/')})
+- [Optional Clockify plugin](${link('docs/clockify/')})
 - [CLI reference](${link('docs/cli/')})
 - [Watson migration](${link('docs/watson/')})
 
@@ -20,6 +21,10 @@ export const GET: APIRoute = ({ site }) => {
 
 - [GitHub repository](https://github.com/fabean/BurrowTime)
 - [Latest release](https://github.com/fabean/BurrowTime/releases/latest)
+
+## Clockify export
+
+The separately installed Clockify plugin exports completed entries only when invoked. It offers client-aware project mapping, editable confirmation, optional per-entry rounding, tag-only descriptions, and a local upload ledger. Clockify support currently requires installing both executables from main, not the latest tagged release.
 
 ## Agent safety rule
 

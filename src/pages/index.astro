@@ -61,6 +61,22 @@ const base = import.meta.env.BASE_URL;
 
   <section class="demo-section">
     <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Optional Clockify plugin</p>
+        <h2>Track locally. Review. Send to Clockify.</h2>
+        <p>Match local projects to Clockify projects with their clients visible.
+          Round each completed entry to a configurable increment, edit the batch,
+          and confirm before uploading. Local receipts keep reruns from exporting
+          the same entry twice.</p>
+        <p>Your ticket tag becomes the description: <code>+SEMA-123</code> exports
+          as <code>SEMA-123</code>. Your local times stay exact.</p>
+        <a class="button" href={`${base}docs/clockify/`}>Set up Clockify export</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="shell">
       <div class="section-heading centered">
         <p class="eyebrow">The real interface</p>
         <h2>Reports that belong in a terminal.</h2>
