@@ -14,6 +14,7 @@ export const GET: APIRoute = ({ site }) => {
 - [Agent time tracking](${link('docs/agent-time-tracking/')})
 - [MCP server](${link('docs/mcp/')})
 - [Optional Clockify plugin](${link('docs/clockify/')})
+- [Optional Timetable connector](${link('docs/timetable/')})
 - [CLI reference](${link('docs/cli/')})
 - [Watson migration](${link('docs/watson/')})
 
@@ -25,6 +26,10 @@ export const GET: APIRoute = ({ site }) => {
 ## Clockify export
 
 The separately installed Clockify plugin exports completed entries only when invoked. It offers client-aware project mapping, editable confirmation, optional per-entry rounding, tag-only descriptions, and a local upload ledger. Clockify support currently requires installing both executables from main, not the latest tagged release.
+
+## Timetable export
+
+The separately installed Timetable connector exports completed entries only when invoked. It offers project mapping, editable confirmation, exact timestamps by default, optional rounding, and idempotent retries using stable frame IDs. Install BurrowTime and the connector from main.
 
 ## Agent safety rule
 

@@ -1,0 +1,61 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Export to Timetable" description="Send completed BurrowTime entries to Timetable with project mapping, an editable review, and safe retries.">
+  <h2>Install the connector</h2>
+  <p>Timetable export is optional. Install BurrowTime and its separate connector from
+    <code>main</code>; this feature is not in the latest tagged release. Keep both
+    executables on your <code>PATH</code>.</p>
+  <pre><code>go install github.com/fabean/BurrowTime/cmd/burrowtime@main
+go install github.com/fabean/BurrowTime/cmd/burrowtime-timetable@main</code></pre>
+
+  <h2>Connect your Timetable account</h2>
+  <p>Create a personal token in Timetable Settings. Get your user ID from
+    <code>GET /api/me</code> with that token. BurrowTime saves the environment
+    variable name, not the token. The default site URL is
+    <code>https://timetable.bluedroplabs.com</code>.</p>
+  <pre><code>export TIMETABLE_TOKEN='your-personal-token'
+burrowtime timetable configure --user YOUR_TIMETABLE_USER_ID
+burrowtime timetable projects
+burrowtime timetable map 'client portal' TIMETABLE_PROJECT_UUID</code></pre>
+  <p>For another Timetable deployment, add <code>--url https://your-host</code>
+    to <code>configure</code>. Use <code>--token-env NAME</code> if your token lives
+    in a different environment variable. The <code>projects</code> command lists
+    accessible project IDs with their clients.</p>
+
+  <h2>Preview, then upload</h2>
+  <pre><code>burrowtime timetable sync --today --dry-run
+burrowtime timetable sync --today
+burrowtime timetable status</code></pre>
+  <p>Sync selects completed entries from today by default. In a terminal, it
+    suggests destinations for unmapped local projects, then lets you review
+    descriptions, destinations, and durations before confirming. A dry run
+    makes no uploads or receipt changes. For automation, map projects first,
+    inspect a dry run, and pass <code>--yes</code> to upload.</p>
+  <p>Use <code>--from YYYY-MM-DD --to YYYY-MM-DD</code> for an inclusive local-date
+    range, or <code>--all</code> for all completed history. Nothing syncs in the
+    background, and local frames remain unchanged.</p>
+
+  <h2>How entries appear in Timetable</h2>
+  <p>Timetable receives exact start and end timestamps by default. BurrowTime
+    sorts the frame's tags into its description: <code>+PORTAL-42</code> becomes
+    <code>PORTAL-42</code>. Timetable has no billable field in this API, so the
+    export does not send one.</p>
+  <p>Rounding is off by default. If needed, set <code>--rounding up</code> and
+    <code>--increment 15m</code> when configuring, or override rounding for one
+    mapping. Rounding changes only the exported end time.</p>
+
+  <h2>Retry safely</h2>
+  <p>Every upload carries <code>source=burrowtime</code> and the frame's stable ID
+    as <code>external_id</code>. If a response is lost after Timetable creates
+    the entry, rerunning sync sends the same request and Timetable returns the
+    existing entry. A changed body with the same ID causes a conflict, which
+    needs manual review. Synced frames are skipped on later runs; changes to a
+    synced local frame are flagged rather than uploaded again.</p>
+  <p>Timetable and Clockify can both receive the same local project. Their
+    mappings and receipts are separate. Keep <code>integration-sync.json</code>
+    when backing up or moving your BurrowTime data.</p>
+  <p>See the <a href="https://github.com/fabean/BurrowTime/blob/main/docs/TIMETABLE.md">full connector reference</a>
+    and <a href="https://timetable.bluedroplabs.com/api-docs/">Timetable API guide</a>.</p>
+</DocsLayout>
