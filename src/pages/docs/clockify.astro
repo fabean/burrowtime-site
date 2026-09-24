@@ -6,10 +6,10 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
   <h2>Install the optional plugin</h2>
   <p>BurrowTime works without Clockify. Install the separate connector only if you
     need it. Nothing syncs in the background, and your local records stay unchanged.</p>
-  <div class="callout"><p>Clockify support is currently on <code>main</code>, not in
-    the latest tagged release. Update both executables:</p></div>
-  <pre><code>go install github.com/fabean/BurrowTime/cmd/burrowtime@main
-go install github.com/fabean/BurrowTime/cmd/burrowtime-clockify@main</code></pre>
+  <div class="callout"><p>Release archives include the connector. If you install
+    with Go, install both commands from the latest release:</p></div>
+  <pre><code>go install github.com/fabean/BurrowTime/cmd/burrowtime@latest
+go install github.com/fabean/BurrowTime/cmd/burrowtime-clockify@latest</code></pre>
   <p>Keep both executables on your <code>PATH</code>.</p>
 
   <h2>Configure and preview</h2>

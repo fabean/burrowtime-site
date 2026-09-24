@@ -4,11 +4,11 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
 <DocsLayout title="Export to Timetable" description="Send completed BurrowTime entries to Timetable with project mapping, an editable review, and safe retries.">
   <h2>Install the connector</h2>
-  <p>Timetable export is optional. Install BurrowTime and its separate connector from
-    <code>main</code>; this feature is not in the latest tagged release. Keep both
-    executables on your <code>PATH</code>.</p>
-  <pre><code>go install github.com/fabean/BurrowTime/cmd/burrowtime@main
-go install github.com/fabean/BurrowTime/cmd/burrowtime-timetable@main</code></pre>
+  <p>Timetable export is optional. The latest release archive includes BurrowTime
+    and its connector. With Go, install both commands and keep them on your
+    <code>PATH</code>.</p>
+  <pre><code>go install github.com/fabean/BurrowTime/cmd/burrowtime@latest
+go install github.com/fabean/BurrowTime/cmd/burrowtime-timetable@latest</code></pre>
 
   <h2>Connect your Timetable account</h2>
   <p>Create a personal token in Timetable Settings. Get your user ID from

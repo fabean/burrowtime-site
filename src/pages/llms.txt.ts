@@ -25,11 +25,11 @@ export const GET: APIRoute = ({ site }) => {
 
 ## Clockify export
 
-The separately installed Clockify plugin exports completed entries only when invoked. It offers client-aware project mapping, editable confirmation, optional per-entry rounding, tag-only descriptions, and a local upload ledger. Clockify support currently requires installing both executables from main, not the latest tagged release.
+The Clockify connector exports completed entries only when invoked. It offers client-aware project mapping, editable confirmation, optional per-entry rounding, tag-only descriptions, and a local upload ledger. Release archives include the connector; Go users can install its command with @latest.
 
 ## Timetable export
 
-The separately installed Timetable connector exports completed entries only when invoked. It offers project mapping, editable confirmation, exact timestamps by default, optional rounding, and idempotent retries using stable frame IDs. Install BurrowTime and the connector from main.
+The Timetable connector exports completed entries only when invoked. It offers project mapping, editable confirmation, exact timestamps by default, optional rounding, and idempotent retries using stable frame IDs. Release archives include the connector; Go users can install its command with @latest.
 
 ## Agent safety rule
 

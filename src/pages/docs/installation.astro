@@ -16,8 +16,9 @@ burrowtime capabilities --json</code></pre>
   <h2>Download a release</h2>
   <p>
     Each tagged release has checksummed archives for Linux, macOS, and Windows.
-    The archive contains <code>burrowtime</code> and the optional
-    <code>watson</code> compatibility executable.
+    The archive contains <code>burrowtime</code>, the optional
+    <code>watson</code> compatibility executable, and the Clockify and Timetable
+    export connectors.
   </p>
   <p><a href="https://github.com/fabean/BurrowTime/releases/latest">Open the latest GitHub release</a>.</p>
 
@@ -28,10 +29,10 @@ make build
 ./bin/burrowtime</code></pre>
 
   <h2>Optional export connectors</h2>
-  <p>To export completed entries, install the separate
+  <p>To export completed entries, use the
     <a href="../clockify/">Clockify</a> or <a href="../timetable/">Timetable</a>
-    connector. These currently require BurrowTime and the connector from
-    <code>main</code>; neither is included in the latest release or standard install.</p>
+    connector included in a release archive. If you install with Go, install
+    the connector command separately with <code>@latest</code>.</p>
   <h2>Choose where data lives</h2>
   <p>
     Set <code>BURROWTIME_DIR</code> to choose a permanent data directory, or pass
